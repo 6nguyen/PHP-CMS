@@ -24,7 +24,7 @@ if(isset($_POST['update'])) {
 <body>
     <div class="container">
         <div class="col-xs-6">
-        
+            <h1 classname="text-center">Update User</h1>
             <form action="login_update.php" method="POST">
                
                 <div class="form-group">

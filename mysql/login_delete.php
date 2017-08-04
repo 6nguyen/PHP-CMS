@@ -24,7 +24,7 @@ if(isset($_POST['delete'])) {
 <body>
     <div class="container">
         <div class="col-xs-6">
-        
+            <h1 classname="text-center">Delete User</h1>
             <form action="login_delete.php" method="POST">
                
                 <div class="form-group">

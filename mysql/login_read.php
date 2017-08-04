@@ -1,25 +1,14 @@
-<?php 
+<?php include "db.php"; ?>
+<?php include "functions.php"; ?>
+
 // C.R.U.D - Read step
+
     
-// Connect to database
-// mysqli_connect("server", "phpmyadmin user", "pw", "db name")
-$connection = mysqli_connect("localhost", "root", "root99", "loginapp");
+<?php     
+// Connect to database by including db.php
 
-if ($connection) {
-    echo "Successfully connected to database.";
-} else {
-    // echo and stop executing code
-    die("Database connection failed");
-}
-
-// Read MySQL data from users 
-$query = "SELECT * FROM users";
-
-// prebuilt function to execute queries to db and store values in $result
-$result = mysqli_query($connection, $query);
-if (!$result) {
-    die("Query failed. " . mysqli_error());
-}
+// Read all MySQL data from users table
+$result = userQuery();
 
 
 ?>
@@ -44,7 +33,7 @@ if (!$result) {
             // fetch_row returns an array
             while($row = mysqli_fetch_assoc($result)) {
             ?>
-              <!-- <pre> html bootstrap to organize assoc array data -->
+              <!-- <pre> html bootstrap to organize/present assoc array data -->
                <pre>
                    <?php print_r($row); ?>
                </pre>
