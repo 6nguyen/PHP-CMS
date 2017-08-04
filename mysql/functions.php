@@ -30,6 +30,31 @@ function showId() {
 }
 
 
+// adds a record to the user table in DB
+function addUser() {
+    global $connection;
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    
+    // if username and password aren't empty
+    if ($username && $password) {
+        echo "Adding " . $username . " to the database... <br/>";
+    } else {
+        die("No username or password entered.<br/>");
+    }
+    
+    // Send form data to MySQL using a query
+    $query = "INSERT INTO users(username, password) ";
+    $query .= "VALUES ('$username', '$password')";
+    
+    // prebuilt function to execute queries to db
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        die("<br/>Query failed.<br/>" . mysqli_error());
+    } else echo "<br/>Success.<br/>";
+}
+
+
 // reads the html update form and updates user in DB
 function updateUser(){
     global $connection;

@@ -1,27 +1,10 @@
-<?php 
-include "db.php";
+<?php include "db.php"; ?>
+<?php include "functions.php"; ?>
 
+<?php
 
 if(isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    
-    // if username and password aren't empty
-    if ($username && $password) {
-        echo "Adding " . $username . " to the database. <br/>";
-    } else {
-        die("No username or password entered.");
-    }
-    
-    // Send form data to MySQL using a query
-    $query = "INSERT INTO users(username, password) ";
-    $query .= "VALUES ('$username', '$password')";
-    
-    // prebuilt function to execute queries to db
-    $result = mysqli_query($connection, $query);
-    if (!$result) {
-        die("Query failed. " . mysqli_error());
-    }
+    addUser();
 }
 
 ?>
