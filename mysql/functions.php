@@ -22,6 +22,7 @@ function userQuery() {
 // prints a <select><option> list of user id's.
 function showId() {
     $result = userQuery();
+    
     while($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
         printf("<option value='$id'>$id</option>");
@@ -33,7 +34,6 @@ function showId() {
 function updateUser(){
     global $connection;
 
-    $result = userQuery();
     $username = $_POST['username'];
     $password = $_POST['password'];
     $id = $_POST['id'];
@@ -57,19 +57,22 @@ function deleteUser() {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $id = $_POST['id'];
+    $validRecord = true;
     
     while($row = mysqli_fetch_assoc($result)) {
         if ($username == $row['username'] && $password == $row['password'] && $id = $row['id']){
+            
             $query = "DELETE FROM users WHERE ";
             $query .= "id = $id ";
 
             $result = mysqli_query($connection, $query);
-            
             if (!$result) {
                 die("<br/>Query failed.<br/>" . mysqli_error($connection));
-            } else echo "<br/>User ID: " . $id . " has been deleted.<br/><br/>"; 
-            
-        } 
+            } else echo "<br/>User ID: " . $id . " has been deleted.<br/><br/>";      
+        } else $validRecord = false;
+    }
+    if (!$validRecord) {
+        echo "Invalid username or password.<br/><br/>";
     }
 }
 
