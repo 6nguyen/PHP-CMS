@@ -122,22 +122,24 @@ function deleteUser() {
     $result = userQuery();
     $username = $_POST['username'];
     $id = $_POST['id'];
-    $validRecord = true;
+    $validRecord = false;
     
     while($row = mysqli_fetch_assoc($result)) {
-        if ($username == $row['username'] && $id = $row['id']){
-            
+        if ($username == $row['username'] && $id == $row['id']){
             $query = "DELETE FROM users WHERE ";
             $query .= "id = $id ";
 
             $result = mysqli_query($connection, $query);
             if (!$result) {
                 die("<br/>Query failed.<br/>" . mysqli_error($connection));
-            } else echo "<br/>User ID: " . $id . " has been deleted.<br/><br/>";      
-        } else $validRecord = false;
+            } else {
+                echo "<br/>User ID: " . $id . " has been deleted.<br/><br/>";  
+                $validRecord = true;
+            }    
+        }
     }
     if (!$validRecord) {
-        echo "Invalid username or password.<br/><br/>";
+        echo "<br/>Invalid username or ID.<br/><br/>";
     }
 }
 
