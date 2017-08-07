@@ -56,6 +56,18 @@ function viewUsers() {
 }
 
 
+// Password Encryption:
+    // CRYPT_BLOWFISH is a hashing method that requires 'salt', 22 characters of acceptable alphabet following the $hashFormat
+    // $2y$ is the blowfish hash format.  10$ says to run hash 10 times
+    // http://php.net/manual/en/function.crypt.php
+function encryptPassword($pw) {
+    $hashFormat = "$2y$10$";
+    $salt = "iusesomecrazystrings22";
+    $cryptBlowfish = $hashFormat . $salt;
+    $pw = crypt($pw, $cryptBlowfish);
+    return $pw;
+}
+
 
 // adds a record to the user table in DB
 function addUser() {
@@ -67,14 +79,8 @@ function addUser() {
     $username = mysqli_real_escape_string($connection, $username);
     $password = mysqli_real_escape_string($connection, $password);
     
-    // Password Encryption:
-    // CRYPT_BLOWFISH is a hashing method that requires 'salt', 22 characters of acceptable alphabet following the $hashFormat
-    // $2y$ is the blowfish hash format.  10$ says to run hash 10 times
-    // http://php.net/manual/en/function.crypt.php
-    $hashFormat = "$2y$10$";
-    $salt = "iusesomecrazystrings22";
-    $cryptBlowfish = $hashFormat . $salt;
-    $password = crypt($password, $cryptBlowfish); 
+    // encrypt password
+    $password = encryptPassword($password);
     
     // if username and password aren't empty
     if ($username && $password) {
@@ -103,6 +109,11 @@ function updateUser(){
     $username = $_POST['username'];
     $password = $_POST['password'];
     $id = $_POST['id'];
+    
+    $username = mysqli_real_escape_string($connection, $username);
+    $password = mysqli_real_escape_string($connection, $password);
+    
+    $password = encryptPassword($password); 
 
     $query = "UPDATE users SET ";
     $query .= "username = '$username', ";
