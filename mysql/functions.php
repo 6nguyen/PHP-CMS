@@ -30,11 +30,51 @@ function showId() {
 }
 
 
+// Displays user records as a table using bootstrap
+function viewUsers() {
+    global $connection;
+    $result = userQuery();
+
+    if (count($result) > 0): ?>
+    <table class="table table-striped">
+      <thead class="thead-default">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+      </thead>
+      <tbody>
+    <?php foreach ($result as $row): array_map('htmlentities', $row); ?>
+        <tr>
+          <td><?php echo implode('</td><td>', $row); ?></td>
+        </tr>
+    <?php endforeach; ?>
+      </tbody>
+    </table>
+    <?php endif; 
+}
+
+
+
 // adds a record to the user table in DB
 function addUser() {
     global $connection;
     $username = $_POST['username'];
     $password = $_POST['password'];
+    
+    // Prevent SQL injections by sanitizing the strings (escaping the strings)
+    $username = mysqli_real_escape_string($connection, $username);
+    $password = mysqli_real_escape_string($connection, $password);
+    
+    // Password Encryption:
+    // CRYPT_BLOWFISH is a hashing method that requires 'salt', 22 characters of acceptable alphabet following the $hashFormat
+    // $2y$ is the blowfish hash format.  10$ says to run hash 10 times
+    // http://php.net/manual/en/function.crypt.php
+    $hashFormat = "$2y$10$";
+    $salt = "iusesomecrazystrings22";
+    $cryptBlowfish = $hashFormat . $salt;
+    $password = crypt($password, $cryptBlowfish); 
     
     // if username and password aren't empty
     if ($username && $password) {
@@ -53,6 +93,7 @@ function addUser() {
         die("<br/>Query failed.<br/>" . mysqli_error());
     } else echo "<br/>Success.<br/>";
 }
+
 
 
 // reads the html update form and updates user in DB
@@ -80,12 +121,11 @@ function deleteUser() {
     global $connection;
     $result = userQuery();
     $username = $_POST['username'];
-    $password = $_POST['password'];
     $id = $_POST['id'];
     $validRecord = true;
     
     while($row = mysqli_fetch_assoc($result)) {
-        if ($username == $row['username'] && $password == $row['password'] && $id = $row['id']){
+        if ($username == $row['username'] && $id = $row['id']){
             
             $query = "DELETE FROM users WHERE ";
             $query .= "id = $id ";

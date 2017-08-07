@@ -8,3 +8,13 @@
 </head>
 <body>
     <div class="container">
+        
+       <nav class="navbar navbar-inverse">
+          <a class="navbar-brand" href="#">GCN</a>
+           <ul class="nav navbar-nav">
+                <li><a href="login_create.php">Add</a></li>
+                <li><a href="login_update.php">Edit</a></li>
+                <li><a href="login_delete.php">Delete</a></li>
+                <li><a href="login_read.php">View Users</a></li>
+           </ul>
+        </nav>

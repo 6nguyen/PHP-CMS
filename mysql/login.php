@@ -4,18 +4,6 @@ include "db.php";
 if(isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    
-    
-
-        
-        
-        
-//    if ($username && $password) {
-//        echo "Username is: " . $username . "<br/>"
-//        . "Password is: " . $password . "<br/>";
-//    } else {
-//        echo "No username or password entered.";
-//    }
 }
 
 ?>
