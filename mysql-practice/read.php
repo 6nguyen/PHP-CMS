@@ -19,55 +19,33 @@
             
             <h1 class="text-center">Student Roster</h1>
             
-<!--
-            <table>
-                <th>
-                    <tr>Student ID</tr>
-                    <tr>First Name</tr>
-                    <tr>Last Name</tr>
-                    <tr>Email</tr>
-                </th>
-                <tbody>
+                <?php 
+                global $connection;
+                $query = "SELECT * FROM students";
+                $result = mysqli_query($connection, $query);
+
+                if (count($result) > 0): ?>
+                <table class="table table-striped">
+                  <thead class="thead-default">
                     <tr>
-                        
--->
-                        
-                    <?php 
-                    global $connection;
-                    $query = "SELECT * FROM students";
-                    $result = mysqli_query($connection, $query);
-            
-                    if (count($result) > 0): ?>
-                    <table class="table table-striped">
-                      <thead class="thead-default">
-                        <tr>
-                            <th>Student ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                    <?php foreach ($result as $row): array_map('htmlentities', $row); ?>
-                        <tr>
-                          <td><?php echo implode('</td><td>', $row); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                      </tbody>
-                    </table>
-                    <?php endif; ?>
-                        
-                        
-                        
-
-<!--
+                        <th>Student ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
                     </tr>
-                </tbody>
-            </table>
-            
--->
+                  </thead>
+                  <tbody>
+                <?php foreach ($result as $row): array_map('htmlentities', $row); ?>
+                    <tr>
+                      <td><?php echo implode('</td><td>', $row); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                  </tbody>
+                </table>
+                <?php endif; ?>
+                    
+                <button class="btn btn-default"><a href="create.php">Add Student</a></button>
 
-            
         </div>
     </div>
 </body>

@@ -35,7 +35,9 @@ if(isset($_POST['add'])) {
                     <input type="text" name="email" placeholder="Email" />
                 </div>  
                 
-                <input type="submit" class="btn btn-primary" name="add" value="Add Student" />                  
+                <input type="submit" class="btn btn-primary" name="add" value="Add Student" />    
+                
+                <button class="btn btn-default"><a href = "read.php">View Students</a></button>              
             </form>
             
         </div>
